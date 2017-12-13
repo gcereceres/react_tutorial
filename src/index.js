@@ -53,22 +53,23 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
+      selectedMove: null,
     }
   }
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
+    const selectedMove = this.state.selectedMove;
 
     const moves = history.map((step, move) => {
       const desc = move ?
-        'Go to move #' + move :
+        'Go to move #' + move + `, Position: ${history[move].lastPosition}`:
         'Go to game start';
 
       return(
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
-          <span>{history[move].lastPosition}</span>
+          <button onClick={() => this.jumpTo(move)} className={(selectedMove===move) ? 'selected-move':''}>{desc}</button>
         </li>
       );
     });
@@ -112,6 +113,7 @@ class Game extends React.Component {
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
+      selectedMove: history.length,
     });
   }
 
@@ -119,6 +121,7 @@ class Game extends React.Component {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
+      selectedMove: step
     });
   }
 }
@@ -157,18 +160,5 @@ function calculatePosition(index){
   const b = idx % 3 === 0 ? 3 : Math.floor(idx % 3);
 
   return `${a}, ${b}`;
-  // const positions = {
-  //     0: "1,1",
-  //     1: "1,2",
-  //     2: "1,3",
-  //     3: "2,1",
-  //     4: "2,2",
-  //     5: "2,3",
-  //     6: "3,1",
-  //     7: "3,2",
-  //     8: "3,3",
-  //   };
-
-  // return positions[index];
 }
   
