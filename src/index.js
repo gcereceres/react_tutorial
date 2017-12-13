@@ -152,18 +152,23 @@ function calculateWinner(squares){
 }
 
 function calculatePosition(index){
-  const positions = {
-      0: "1,1",
-      1: "1,2",
-      2: "1,3",
-      3: "2,1",
-      4: "2,2",
-      5: "2,3",
-      6: "3,1",
-      7: "3,2",
-      8: "3,3",
-    };
+  const idx = index + 1;
+  const a = Math.ceil(idx / 3);
+  const b = idx % 3 === 0 ? 3 : Math.floor(idx % 3);
 
-  return positions[index];
+  return `${a}, ${b}`;
+  // const positions = {
+  //     0: "1,1",
+  //     1: "1,2",
+  //     2: "1,3",
+  //     3: "2,1",
+  //     4: "2,2",
+  //     5: "2,3",
+  //     6: "3,1",
+  //     7: "3,2",
+  //     8: "3,3",
+  //   };
+
+  // return positions[index];
 }
   
