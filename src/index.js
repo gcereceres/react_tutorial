@@ -47,6 +47,7 @@ class Game extends React.Component {
       history: [{
         squares: Array(9).fill(null),
         lastPosition: null,
+        move: 0,
       }],
       stepNumber: 0,
       xIsNext: true,
@@ -63,9 +64,11 @@ class Game extends React.Component {
     const winner = calculateWinner(current.squares);
     const selectedMove = this.state.selectedMove;
 
-    const moves = history.map((step, move) => {
+    const moves = history.map((step, i) => {
+      const move = history[i].move;
+      const lastPosition = history.find((h)=>{return h.move===move;}).lastPosition;
       const desc = move ?
-        'Go to move #' + move + `, Position: ${history[move].lastPosition}`:
+        'Go to move #' + move + `, Position: ${lastPosition}`:
         'Go to game start';
 
       return(
@@ -119,6 +122,7 @@ class Game extends React.Component {
       history: history.concat([{
         squares: squares,
         lastPosition: calculatePosition(i),
+        move: history.length,
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
